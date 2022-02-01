@@ -1,6 +1,82 @@
 <html>
-    <head></head>
-    <body>
-        
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%- wwwpath %>| <%- config.siteName %></title>
+    <style>
+        html, body {
+            font-family: -apple-system, 'SC Pro Text', 'Noto Sans', 'Open Sans', 'Roboto', 'Ubuntu', 'PingFang SC', 'Noto Sans CJK SC', 'Hiragino Sans GB', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+        .grand-container {
+            max-width: 900px;
+            padding: 30px;
+            margin: 0 auto;
+        }
+
+
+        .grand-content {
+            padding: 50px 0 0;
+        }
+        a.dir-entity-item {
+            font-size: 17px;
+            color: #000;
+            text-decoration: none;
+            display: block;
+            padding: 0px 0px;
+            margin: 0 0 16px;
+            border-radius: 1px;
+        }
+        a.dir-entity-item:hover {
+            background: #EEE;
+            box-shadow: #EEE 0 0 0 7px;
+        }
+
+
+        .grand-footer {
+            font-size: 13px;
+            padding: 100px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grand-container">
+        <div>
+            <div>
+                <header>
+                    <div><%- pageChain ? pageChain.map(function (x, i, arr) {
+                        return `<a href="/${arr.slice(0, i+1).join('/')}/">${x}</a>`;
+                    }).join(' / ') : '' %></div>
+                    <h1><%- pageTitle %></h1>
+                </header>
+            </div>
+        </div>
+        <div class="grand-content">
+            <!-- <div class="metadata">
+                <div>req.url: <%- runtime.env.url  %></div>
+                <div>$uri: <%- wwwpath  %></div>
+                <div>$request_filename: <%- fspath  %></div>
+            </div> -->
+            
+            <div class="list-dirs">
+                <% dirsList.map(function (itemName) { %>
+                    <a class="dir-entity-item" href="<%- (itemName) %>/"><%- itemName %>/</a>
+                <% }) %>
+            </div>
+
+            <div class="list-files">
+                <% filesList.map(function (itemName) { %>
+                    <a class="dir-entity-item" href="<%- (itemName) %>"><%- itemName %></a>
+                <% }) %>
+            </div>
+        </div>
+        <footer class="grand-footer">
+            <div><%- config.copyrightLine %></div>
+        </footer>
+    </div>
+</body>
+
 </html>
