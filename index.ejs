@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%- wwwpath %>| <%- config.siteName %></title>
+    <title><%- wwwpath %> | <%- config.siteName %></title>
     <style>
         html, body {
-            font-family: -apple-system, 'SC Pro Text', 'Noto Sans', 'Open Sans', 'Roboto', 'Ubuntu', 'PingFang SC', 'Noto Sans CJK SC', 'Hiragino Sans GB', sans-serif;
+            /* font-family: -apple-system, 'SC Pro Text', 'Noto Sans', 'Open Sans', 'Roboto', 'Ubuntu', 'PingFang SC', 'Noto Sans CJK SC', 'Hiragino Sans GB', sans-serif; */
             padding: 0;
             margin: 0;
         }
@@ -15,17 +15,30 @@
             padding: 30px;
             margin: 0 auto;
         }
-
-
+        
+        .header-title {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+        .header-nav {
+            font-size: 15px;
+            padding: 50px 0;
+        }
+        
+        
         .grand-content {
-            padding: 50px 0 0;
+            font-family: 'JetBrains Mono NL', 'JetBrains Mono', 'Ubuntu Mono', 'Noto Mono', 'Fira Code', monospace, -apple-system, 'SC Pro Text', 'Noto Sans', 'Open Sans', 'Roboto', 'Ubuntu', 'PingFang SC', 'Noto Sans CJK SC', 'Hiragino Sans GB' !important;
+            border-top: 1px solid #AAA;
+            border-bottom: 1px solid #AAA;
+            padding: 50px 0;
         }
         a.dir-entity-item {
-            font-size: 17px;
+            font-size: 18px;
             color: #000;
             text-decoration: none;
-            display: block;
-            padding: 0px 0px;
+            display: inline-block;
+            padding: 2px 0px;
             margin: 0 0 16px;
             border-radius: 1px;
         }
@@ -33,8 +46,8 @@
             background: #EEE;
             box-shadow: #EEE 0 0 0 7px;
         }
-
-
+        
+        
         .grand-footer {
             font-size: 13px;
             padding: 100px 0 0;
@@ -44,16 +57,17 @@
 
 <body>
     <div class="grand-container">
-        <div>
+        <div class="grand-header">
             <div>
                 <header>
-                    <div>
+                    <div class="header-title"><%- config.siteName %></div>
+                    <div class="header-nav">
                         <a href="/">(Root)</a> /
                         <%- pageChain ? pageChain.map(function (x, i, arr) {
                             return `<a href="/${arr.slice(0, i+1).join('/')}/">${x}</a>`;
                         }).join(' / ') : '' %>
+                        <h1><%- pageChain ? pageTitle : '' %></h1>
                     </div>
-                    <h1><%- pageTitle %></h1>
                 </header>
             </div>
         </div>
@@ -66,13 +80,13 @@
             
             <div class="list-dirs">
                 <% dirsList.map(function (itemName) { %>
-                    <a class="dir-entity-item" href="<%- (itemName) %>/"><%- itemName %>/</a>
+                    <a class="dir-entity-item" href="<%- (itemName) %>/"><%- itemName %>/</a><br>
                 <% }) %>
             </div>
 
             <div class="list-files">
                 <% filesList.map(function (itemName) { %>
-                    <a class="dir-entity-item" target="_blank" href="<%- (itemName) %>"><%- itemName %></a>
+                    <a class="dir-entity-item" target="_blank" href="<%- (itemName) %>"><%- itemName %></a><br>
                 <% }) %>
             </div>
         </div>
