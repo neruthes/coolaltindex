@@ -12,7 +12,7 @@ const fspath = process.env.wwwroot + wwwpath;
 let pageChain = null;
 let pageTitle = '(Root)';
 if (wwwpath !== '/') {
-    wwwpathArr = wwwpath.split('/');
+    const wwwpathArr = wwwpath.split('/');
     pageChain = wwwpathArr.slice(1, -2);
     pageTitle = wwwpathArr.slice(-2, -1);
 };
@@ -45,7 +45,8 @@ if (fs.existsSync(fspath)) {
     // filesList = [];
     // dirsList = [];
 } else {
-    console.log(`ERROR: 404 Not Found.          '${fspath}'`);
+    console.log(fspath);
+    console.log(`404 Not Found. '${fspath}'`);
     process.exit(0);
 };
 
