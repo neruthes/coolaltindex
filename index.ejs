@@ -47,6 +47,7 @@
         <div>
             <div>
                 <header>
+                    <a href="/">(Root)</a>
                     <div><%- pageChain ? pageChain.map(function (x, i, arr) {
                         return `<a href="/${arr.slice(0, i+1).join('/')}/">${x}</a>`;
                     }).join(' / ') : '' %></div>
