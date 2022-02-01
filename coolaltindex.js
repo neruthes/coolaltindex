@@ -34,19 +34,19 @@ if (fs.existsSync(configPath)) {
 let filesList;
 let dirsList;
 
-if (fs.existsSync(fspath)) {
-    const getFilesOrDirsList = function (source, needDir) {
-        return fs.readdirSync(source, { withFileTypes: true })
+const getFilesOrDirsList = function (source, needDir) {
+    return fs.readdirSync(source, { withFileTypes: true })
         .filter(node => (needDir ? node.isDirectory() : !node.isDirectory()))
-        .map(node => node.name)
-    };
+        .map(node => node.name);
+};
+if (fs.existsSync(fspath)) {
     filesList = getFilesOrDirsList(fspath, false);
     dirsList = getFilesOrDirsList(fspath, true);
     // filesList = [];
     // dirsList = [];
 } else {
-    console.log(`404 Not Found`);
-    process.exit(1);
+    console.log(`ERROR: 404 Not Found.          '${fspath}'`);
+    process.exit(0);
 };
 
 // console.log(filesList);
