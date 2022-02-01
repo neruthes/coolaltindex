@@ -6,6 +6,7 @@ const ejs = require('ejs');
 
 
 // Prase Arguments
+
 const wwwpath = decodeURIComponent(process.env.url);
 const fspath = process.env.wwwroot + wwwpath;
 
@@ -17,7 +18,9 @@ if (wwwpath !== '/') {
     pageTitle = wwwpathArr.slice(-2, -1);
 };
 
+
 // Initialize configuration
+
 const config = {
     siteName: 'File Server',
     copyrightLine: 'Copyright &copy; Website Owner.'
