@@ -47,10 +47,12 @@
         <div>
             <div>
                 <header>
-                    <a href="/">(Root)</a>
-                    <div><%- pageChain ? pageChain.map(function (x, i, arr) {
-                        return `<a href="/${arr.slice(0, i+1).join('/')}/">${x}</a>`;
-                    }).join(' / ') : '' %></div>
+                    <div>
+                        <a href="/">(Root)</a> /
+                        <%- pageChain ? pageChain.map(function (x, i, arr) {
+                            return `<a href="/${arr.slice(0, i+1).join('/')}/">${x}</a>`;
+                        }).join(' / ') : '' %>
+                    </div>
                     <h1><%- pageTitle %></h1>
                 </header>
             </div>
@@ -70,7 +72,7 @@
 
             <div class="list-files">
                 <% filesList.map(function (itemName) { %>
-                    <a class="dir-entity-item" href="<%- (itemName) %>"><%- itemName %></a>
+                    <a class="dir-entity-item" target="_blank" href="<%- (itemName) %>"><%- itemName %></a>
                 <% }) %>
             </div>
         </div>
