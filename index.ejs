@@ -37,6 +37,18 @@
             border-bottom: 1px solid #AAA;
             padding: 50px 0;
         }
+        a.dir-entity-item::before {
+            text-align: center;
+            display: inline-block;
+            width: 20px;
+            margin-right: 10px;
+        }
+        a.dir-entity-item.type-dir::before {
+            content: "🖿";
+        }
+        a.dir-entity-item.type-file::before {
+            content: "🗎";
+        }
         a.dir-entity-item {
             font-size: 18px;
             color: #000;
@@ -84,13 +96,13 @@
             
             <div class="list-dirs">
                 <% dirsList.map(function (itemName) { %>
-                    <a class="dir-entity-item" href="<%- (itemName) %>/"><%- itemName %>/</a><br>
+                    <a class="dir-entity-item type-dir"                     href="<%- (itemName) %>/"   ><%- itemName %>/</a><br>
                 <% }) %>
             </div>
 
             <div class="list-files">
                 <% filesList.map(function (itemName) { %>
-                    <a class="dir-entity-item" target="_blank" href="<%- (itemName) %>"><%- itemName %></a><br>
+                    <a class="dir-entity-item type-file" target="_blank"    href="<%- (itemName) %>"    ><%- itemName %></a><br>
                 <% }) %>
             </div>
         </div>
