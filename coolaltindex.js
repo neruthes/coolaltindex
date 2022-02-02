@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
 const fs = require('fs');
-const sh = require('child_process').execSync;
+// const sh = require('child_process').execSync;
 const ejs = require('ejs');
 
 
@@ -60,8 +60,7 @@ if (fs.existsSync(fspath)) {
 console.log(ejs.render(fs.readFileSync(__dirname + '/index.ejs').toString(), {
     runtime: {
         env: process.env,
-        fs: fs,
-        sh: sh
+        fs: fs
     },
     pageChain: pageChain,
     pageTitle: pageTitle,
