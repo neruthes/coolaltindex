@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%- wwwpath %> | <%- config.siteName %></title>
+    <title><%- (wwwpath === '/' ? '(Root)' : wwwpath) %> | <%- config.siteName %> </title>
     <style>
         html, body {
             font-family: -apple-system, 'SC Pro Text', 'Noto Sans', 'Open Sans', 'Roboto', 'Ubuntu', 'PingFang SC', 'Noto Sans CJK SC', 'Hiragino Sans GB', sans-serif;
@@ -15,7 +15,7 @@
             padding: 30px;
             margin: 0 auto;
         }
-        
+
         .header-title {
             font-size: 20px;
             font-weight: bold;
@@ -23,14 +23,14 @@
         }
         .header-nav {
             font-size: 15px;
-            padding: 50px 0;
+            padding: 30px 0 10px;
         }
         .header-nav a {
             color: #07D;
             text-decoration: none;
         }
-        
-        
+
+
         .grand-content {
             font-family: 'JetBrains Mono NL', 'JetBrains Mono', 'Ubuntu Mono', 'Noto Mono', 'Fira Code', monospace, -apple-system, 'SC Pro Text', 'Noto Sans', 'Open Sans', 'Roboto', 'Ubuntu', 'PingFang SC', 'Noto Sans CJK SC', 'Hiragino Sans GB' !important;
             border-top: 1px solid #AAA;
@@ -62,8 +62,7 @@
             background: #EEE;
             box-shadow: #EEE 0 0 0 3px;
         }
-        
-        
+
         .grand-footer {
             font-size: 13px;
             padding: 100px 0 0;
@@ -79,9 +78,11 @@
                     <div class="header-title"><%- config.siteName %></div>
                     <div class="header-nav">
                         <a href="/">(Root)</a> /
-                        <%- pageChain ? pageChain.map(function (x, i, arr) {
-                            return `<a href="/${arr.slice(0, i+1).join('/')}/">${x}</a>`;
-                        }).join(' / ') : '' %>
+                        <%-
+                            pageChain ? pageChain.map(function (x, i, arr) {
+                                return `<a href="/${arr.slice(0, i+1).join('/')}/">${x}</a> / `;
+                            }).join('')  : ''
+                        %>
                         <h1><%- pageChain ? pageTitle : '&nbsp;&nbsp;&nbsp;' %></h1>
                     </div>
                 </header>

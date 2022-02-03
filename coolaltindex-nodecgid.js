@@ -5,18 +5,14 @@ const http = require('http');
 const ejs = require('ejs');
 
 
-const indexEjsTempl = fs.readFileSync(__dirname + '/index.ejs').toString();
-let renderIndex = ejs.compile(indexEjsTempl, { async: false });
-setTimeout(function () {
-    renderIndex = ejs.compile(indexEjsTempl, { async: false });
-}, (process.env.isDEVENV === 'true' ? 20 : 300) * 1000);
-
+const tmplFilePath = __dirname + '/index.ejs';
 
 const server = http.createServer(function (req, res) {
     const wwwroot = req.headers.wwwroot;    
     const wwwpath = decodeURIComponent(req.url);
-
     const fspath = wwwroot + wwwpath;
+
+    // Parse arguments
 
     let pageChain = null;
     let pageTitle = '(Root)';
@@ -27,16 +23,21 @@ const server = http.createServer(function (req, res) {
     };
 
     // Load configuration
+
     const config = {
         siteName: 'File Server',
         copyrightLine: 'Copyright &copy; Website Owner.'
     };
     configPath = `${wwwroot}/.coolaltindexconfig.json`;
-    if (fs.existsSync(configPath)) {
-        let userConfig = JSON.parse(fs.readFileSync(configPath));
-        Object.keys(userConfig).map(function (x) {
-            config[x] = userConfig[x];
-        });
+    try {
+        if (fs.existsSync(configPath)) {
+            let userConfig = JSON.parse(fs.readFileSync(configPath));
+            Object.keys(userConfig).map(function (x) {
+                config[x] = userConfig[x];
+            });
+        };
+    } catch (e) {
+        // Do nothing?
     };
 
     // Generate list of dirs and files
@@ -54,16 +55,16 @@ const server = http.createServer(function (req, res) {
         filesList = getFilesOrDirsList(fspath, false);
         dirsList = getFilesOrDirsList(fspath, true);
     } else {
-        console.log(fspath);
-        console.log(`404 Not Found. '${fspath}'`);
+        res.writeHead(404);
+        res.end('404 Not Found.')
         return 0;
     };
 
+    // Render EJS with data
 
-    let outputHtml = renderIndex({
+    const ejsData = {
         runtime: {
-            env: process.env,
-            fs: fs
+            env: process.env
         },
         pageChain: pageChain,
         pageTitle: pageTitle,
@@ -72,11 +73,21 @@ const server = http.createServer(function (req, res) {
         fspath: fspath,
         filesList: filesList,
         dirsList: dirsList
+    };
+    ejs.renderFile(tmplFilePath, ejsData, {
+        cache: true,
+        filename: tmplFilePath
+    }, function (err, str) {
+        if (err) {
+            res.writeHead(500);
+            res.end('500 Internal Server Error. Failed rendering EJS.');
+        } else {
+            res.writeHead(200, {
+                'content-type': 'text/html'
+            });
+            res.end(str);
+        };
     });
-    res.writeHead(200, {
-        'content-type': 'text/html'
-    });
-    res.end(outputHtml);
 });
 
 server.listen(0, '127.0.0.1');
