@@ -6,7 +6,10 @@ const ejs = require('ejs');
 
 
 const indexEjsTempl = fs.readFileSync(__dirname + '/index.ejs').toString();
-const renderIndex = ejs.compile(indexEjsTempl, { async: false });
+let renderIndex = ejs.compile(indexEjsTempl, { async: false });
+setTimeout(function () {
+    renderIndex = ejs.compile(indexEjsTempl, { async: false });
+}, 120*1000);
 
 
 const server = http.createServer(function (req, res) {
