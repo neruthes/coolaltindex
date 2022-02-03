@@ -95,6 +95,5 @@ server.listen(0, '127.0.0.1');
 server.on('listening', function () {
     const port = server.address().port;
     console.log(`[INFO] Listening port ${port}`);
-    fs.writeFileSync(`/tmp/nodecgid.env.coolaltindex`, JSON.stringify(server.address(), 4));
     fs.writeFileSync(process.env.cgi_portfile, port.toString());
 });
