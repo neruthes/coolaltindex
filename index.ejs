@@ -82,18 +82,12 @@
                         <%- pageChain ? pageChain.map(function (x, i, arr) {
                             return `<a href="/${arr.slice(0, i+1).join('/')}/">${x}</a>`;
                         }).join(' / ') : '' %>
-                        <h1><%- pageChain ? pageTitle : '' %></h1>
+                        <h1><%- pageChain ? pageTitle : '&nbsp;&nbsp;&nbsp;' %></h1>
                     </div>
                 </header>
             </div>
         </div>
         <div class="grand-content">
-            <!-- <div class="metadata">
-                <div>req.url: <%- runtime.env.url  %></div>
-                <div>$uri: <%- wwwpath  %></div>
-                <div>$request_filename: <%- fspath  %></div>
-            </div> -->
-            
             <div class="list-dirs">
                 <% dirsList.map(function (itemName) { %>
                     <a class="dir-entity-item type-dir"                     href="<%- (itemName) %>/"   ><%- itemName %>/</a><br>

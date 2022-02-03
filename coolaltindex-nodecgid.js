@@ -9,7 +9,7 @@ const indexEjsTempl = fs.readFileSync(__dirname + '/index.ejs').toString();
 let renderIndex = ejs.compile(indexEjsTempl, { async: false });
 setTimeout(function () {
     renderIndex = ejs.compile(indexEjsTempl, { async: false });
-}, 120*1000);
+}, (process.env.isDEVENV === 'true' ? 20 : 300) * 1000);
 
 
 const server = http.createServer(function (req, res) {
