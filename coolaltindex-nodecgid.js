@@ -8,17 +8,21 @@ const ejs = require('ejs');
 const tmplFilePath = __dirname + '/index.ejs';
 
 const server = http.createServer(function (req, res) {
+    const wwwprefix = req.headers['wwwprefix'] || '';
     const wwwroot = req.headers.wwwroot;    
     const wwwpath = decodeURIComponent(req.url);
     const fspath = wwwroot + wwwpath;
 
     // Parse arguments
 
+    const wwwprefixArr = wwwprefix === '' ? [] : wwwprefix.split('/');
+    
+    let wwwpathArr;
     let pageChain = null;
     let pageTitle = '(Root)';
-    if (wwwpath !== '/') {
-        const wwwpathArr = wwwpath.split('/');
-        pageChain = wwwpathArr.slice(1, -2);
+    if (wwwprefix + wwwpath !== '/') {
+        wwwpathArr = wwwpath.split('/');
+        pageChain = wwwprefixArr.concat(wwwpathArr.slice(1, -2));
         pageTitle = wwwpathArr.slice(-2, -1);
     };
 
@@ -66,10 +70,14 @@ const server = http.createServer(function (req, res) {
         runtime: {
             env: process.env
         },
+        req: req,
         pageChain: pageChain,
         pageTitle: pageTitle,
         config: config,
+        wwwprefix: wwwprefix,
+        wwwprefixArr: wwwprefixArr,
         wwwpath: wwwpath,
+        wwwpathArr: wwwpathArr,
         fspath: fspath,
         filesList: filesList,
         dirsList: dirsList
