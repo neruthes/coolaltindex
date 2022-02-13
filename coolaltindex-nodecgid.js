@@ -8,10 +8,12 @@ const ejs = require('ejs');
 const tmplFilePath = __dirname + '/index.ejs';
 
 const server = http.createServer(function (req, res) {
+    const myUrlObj = new URL(req.url, `http://${req.headers.host}`);
     const wwwprefix = req.headers['wwwprefix'] || '';
     const wwwroot = req.headers.wwwroot;    
-    const wwwpath = decodeURIComponent(req.url);
-    const fspath = wwwroot + wwwpath;
+    const wwwpath = decodeURIComponent(myUrlObj.pathname);
+    const fspathOld = wwwroot + wwwpath;
+    const fspath = wwwroot + myUrlObj.pathname;
 
     // Parse arguments
 
@@ -56,11 +58,20 @@ const server = http.createServer(function (req, res) {
             .filter(nodeName => nodeName[0] !== '.');
     };
     if (fs.existsSync(fspath)) {
+        // Feature: Disable indexing by placing a '.noindex' file (when its content does not match param 'token')
+        if (
+            fs.existsSync(`${fspath}/.noindex`) &&
+            fs.readFileSync(`${fspath}/.noindex`).toString().trim() !== myUrlObj.searchParams.get('token')
+        ) {
+            res.writeHead(404);
+            res.end('404 Not Found.');
+            return 0;
+        };
         filesList = getFilesOrDirsList(fspath, false);
         dirsList = getFilesOrDirsList(fspath, true);
     } else {
         res.writeHead(404);
-        res.end('404 Not Found.')
+        res.end('404 Not Found.');
         return 0;
     };
 
