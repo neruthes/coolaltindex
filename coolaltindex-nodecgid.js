@@ -13,7 +13,7 @@ const server = http.createServer(function (req, res) {
     const wwwroot = req.headers.wwwroot;    
     const wwwpath = decodeURIComponent(myUrlObj.pathname);
     const fspathOld = wwwroot + wwwpath;
-    const fspath = wwwroot + myUrlObj.pathname;
+    const fspath = wwwroot + wwwpath;
 
     // Parse arguments
 
