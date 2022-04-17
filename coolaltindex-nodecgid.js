@@ -63,8 +63,8 @@ const server = http.createServer(function (req, res) {
             fs.existsSync(`${fspath}/.noindex`) &&
             fs.readFileSync(`${fspath}/.noindex`).toString().trim() !== myUrlObj.searchParams.get('token')
         ) {
-            res.writeHead(404);
-            res.end('404 Not Found.');
+            res.writeHead(403);
+            res.end('Indexing is not permitted here.');
             return 0;
         };
         filesList = getFilesOrDirsList(fspath, false);
