@@ -71,7 +71,7 @@ const server = http.createServer(function (req, res) {
         dirsList = getFilesOrDirsList(fspath, true);
     } else {
         res.writeHead(404);
-        res.end('404 Not Found.');
+        res.end('404 Not Found. Requested path "' + fspath + '" does not exist on filesystem.');
         return 0;
     };
 
