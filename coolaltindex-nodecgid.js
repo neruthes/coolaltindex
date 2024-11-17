@@ -75,6 +75,13 @@ const server = http.createServer(function (req, res) {
         return 0;
     };
 
+    // Display pregenerated 'index.html' if it exists
+    if (fs.existsSync(fspath + '/index.html')) {
+        res.writeHead(200);
+        res.end(fs.readFileSync(fspath + '/index.html').toString());
+        return 0;
+    };
+
     // Render EJS with data
 
     const ejsData = {
